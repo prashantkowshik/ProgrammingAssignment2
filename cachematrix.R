@@ -45,8 +45,31 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 ################################################################################
-## Write a short comment describing this function
+## Function: cacheSolve
+## Purpose: To compute the inverse of a special "matrix" object returned by the
+## 'makeCacheMatrix' function.
+## Arguments: Matrix object and the List of arguments to be passed to solve()
+## Returns: The inverse matrix of the special "matrix" object supplied
 ################################################################################
 cacheSolve <- function(x, ...) {
-    ## Return a matrix that is the inverse of 'x'
+    # retrieve the inverse matrix in cache
+    i <- x$getinverse()
+    
+    # check if the inverse matrix is NULL
+    if (!is.null(i)) {
+        # return the cached inverse matrix
+        message("getting inverse matrix from cache.")
+        return(i)
+    }
+    
+    # compute the inverse matrix
+    mx <- x$get()
+    i <- solve(mx, ...)
+    
+    # set the inverse matrix (i.e. cache it)
+    x$setinverse(i)
+    
+    # return inverse matrix
+    i
 }
+
